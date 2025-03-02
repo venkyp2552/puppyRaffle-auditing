@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.6;
-//audit-information Using floating pragma version is bad, try to stick exact version.
-//@audit-info : why are you using 0.7 version?
+//report-written Using floating pragma version is bad, try to stick exact version.
+//report-written why are you using 0.7 version?
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -36,7 +36,7 @@ contract PuppyRaffle is ERC721, Ownable {
     mapping(uint256 => string) public rarityToName;
    
 
-    //@audit-gas should be constant
+    //written-report should be constant
 
     // Stats for the common puppy (pug)
     string private commonImageUri = "ipfs://QmSsYRx3LpDAb1GZQm7zZ1AuHZjfbPkD6J7s9r41xu1mf8";
@@ -63,7 +63,7 @@ contract PuppyRaffle is ERC721, Ownable {
     /// @param _raffleDuration the duration in seconds of the raffle
     constructor(uint256 _entranceFee, address _feeAddress, uint256 _raffleDuration) ERC721("Puppy Raffle", "PR") {
         entranceFee = _entranceFee;
-        //@audit-info check for zero address!
+        //@written-report check for zero address!
         //input validation
         feeAddress = _feeAddress;
         raffleDuration = _raffleDuration;
@@ -93,6 +93,7 @@ contract PuppyRaffle is ERC721, Ownable {
 
         //@audit - Dos attack
         // Check for duplicates
+        //written-report for looping state variabels 
         for (uint256 i = 0; i < players.length - 1; i++) {
             for (uint256 j = i + 1; j < players.length; j++) {
                 require(players[i] != players[j], "PuppyRaffle: Duplicate player");
